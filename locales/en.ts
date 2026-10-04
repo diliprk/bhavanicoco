@@ -59,23 +59,34 @@ export const en = {
   },
   roadmap: {
     title: "Our Strategic Roadmap",
-    intro: "Three steps, from capturing immediate value to building a full agricultural enterprise.",
+    intro: "Four steps, from forming the society to building a full agricultural enterprise.",
     current: "Current Phase",
     stepLabel: "Step",
     // Short labels drawn inside the roadmap image
     svg: [
+      { title: "Formation", items: ["Enrol 40 founding members", "First general meeting", "Elect the board, adopt bye-laws", "Register the society"] },
       { title: "Foundation", items: ["Nut grading & sales", "Husk / shell split", "Coir fibre & coco pith"] },
       { title: "Federation", items: ["Join neighbouring societies", "AMC farm care", "Copra & desiccated coconut", "Shell sales"] },
       { title: "Manufacturing", items: ["Direct distribution", "Coir ropes & mattresses", "Eco-friendly bags"] },
     ],
     steps: [
       {
+        title: "Forming the Society",
+        sub: "We are forming a farmer-owned society. It does not exist yet, and the farmers who join will build it.",
+        items: [
+          { h: "Founding members", t: "Enrolling 40 founding farmers from Erode district who meet the eligibility criteria." },
+          { h: "Board election", t: "At the first general meeting, the founding members elect the first Board of Directors by vote. Until then, the promoters only organise the process." },
+          { h: "Bye-laws and registration", t: "Adopting bye-laws in line with the Coconut Development Board framework, registering the society and opening its bank account." },
+          { h: "Hiring a CEO", t: "Once registered, the elected board appoints a professional CEO to run day-to-day operations." },
+        ],
+      },
+      {
         title: "Foundation & Primary Aggregation",
         sub: "Building our base and capturing immediate low-hanging value.",
         items: [
           { h: "Nut grading & sales", t: "Pooling our coconuts to grade them by class, weight and shape. We target premium local markets by selling whole nuts with the kudumi (tuft) retained." },
           { h: "Primary separation", t: "Splitting the coconut into the nut, shell and husk." },
-          { h: "Minimal processing", t: "Basic infrastructure to extract coconut fibre and coco pith (coir dust). We pack and sell coco pith directly to the open market and nurseries in gunny bags for immediate by-product revenue." },
+          { h: "Minimal processing", t: "Basic infrastructure to extract coconut fibre and coco pith (coir dust). We pack and sell coco pith directly to the open market and nurseries in plastic sacks for immediate by-product revenue." },
         ],
       },
       {
@@ -83,7 +94,7 @@ export const en = {
         sub: "Becoming a Coconut Producers Federation (CPF) by uniting with neighbouring farmer societies.",
         items: [
           { h: "Network expansion", t: "Sponsoring 1 to 2 additional neighbouring societies to increase our collective volume." },
-          { h: "Professional farm management (AMC)", t: "End-to-end tree care, disease management and harvesting on an Annual Maintenance Contract for holdings with a minimum of 1,000 trees." },
+          { h: "Professional farm management (AMC)", t: "End-to-end tree care, disease management and harvesting on an Annual Maintenance Contract for holdings with a minimum of 1,000 trees. Wherever feasible, we will use drones and robots for tasks such as crop monitoring, spraying, tree climbing and [harvesting](https://www.instagram.com/reel/Dd9gQE2TOrX/)." },
           { h: "Drying & copra", t: "Community copra drying yards for stable, high-value sales." },
           { h: "Food processing", t: "Machinery to produce and package Desiccated Coconut from fresh nuts." },
           { h: "Shell commercialization", t: "Aggregating shells for bulk industrial sales (charcoal or activated carbon production)." },
@@ -123,6 +134,9 @@ export const en = {
     mapBusy: "Getting location...",
     mapDenied: "Could not get your location. You can paste a Google Maps link instead, or leave this blank and apply anyway.",
     amc: "Interested in future AMC farm management?",
+    boardTip:
+      "At the first general meeting, founding members nominate candidates and elect the Board of Directors, with one vote per member. Directors then serve a fixed term set by the bye-laws and are re-elected by the members.",
+    board: "I am interested in being a Founding / Board Member",
     yes: "Yes",
     no: "No",
     choose: "Select",
@@ -148,7 +162,8 @@ export const en = {
   },
   team: {
     title: "Our Team",
-    board: "Board Members",
+    board: "Founding Promoters",
+    boardNote: "The first Board of Directors will be elected by the founding members at the first general meeting.",
     advisors: "External Advisors",
   },
   volunteer: {

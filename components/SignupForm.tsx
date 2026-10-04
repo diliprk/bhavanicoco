@@ -8,11 +8,11 @@ import { ERODE_TALUKS, TALUKS_TA } from "@/lib/taluks";
 import { isAge, isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
-import { Button, Field, Input, Section, Select } from "./ui";
+import { Button, Field, Input, InfoTip, Section, Select } from "./ui";
 
 const empty = {
   name: "", phone: "", age: "", village: "", town: "", taluk: "", pin: "",
-  trees: "", acres: "", mapLink: "", amc: "", consent: false, website: "",
+  trees: "", acres: "", mapLink: "", amc: "", board: false, consent: false, website: "",
 };
 type Form = typeof empty;
 
@@ -92,6 +92,7 @@ export default function SignupForm() {
       acres: Number(v.acres),
       mapLink: v.mapLink.trim(),
       amc: v.amc,
+      board: v.board ? "Yes" : "No",
       website: v.website, // honeypot
       turnstileToken: token,
     });
@@ -163,6 +164,18 @@ export default function SignupForm() {
                 <option value="No">{f.no}</option>
               </Select>
             </Field>
+            <div className="flex min-h-11 items-center gap-3 sm:col-span-2">
+              <label className="flex items-center gap-3 text-sm font-semibold text-green-dark">
+                <input
+                  type="checkbox"
+                  checked={v.board}
+                  onChange={(e) => setV((s) => ({ ...s, board: e.target.checked }))}
+                  className="h-5 w-5 accent-[#1f5d3a]"
+                />
+                {f.board}
+              </label>
+              <InfoTip text={f.boardTip} />
+            </div>
             <div className="sm:col-span-2">
               <Field label={f.map} hint={f.mapHint} error={errors.mapLink}>
                 <Input value={v.mapLink} onChange={set("mapLink")} type="url" placeholder="https://maps.app.goo.gl/..." />

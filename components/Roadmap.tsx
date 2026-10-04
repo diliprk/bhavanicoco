@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useI18n } from "@/lib/i18n";
 import { buildRoadmapSvg } from "@/lib/roadmapSvg";
-import { Section } from "./ui";
+import { RichText, Section } from "./ui";
 
 export default function Roadmap() {
   const { t } = useI18n();
@@ -21,7 +21,7 @@ export default function Roadmap() {
       <div className="mt-8 hidden md:block" dangerouslySetInnerHTML={{ __html: wide }} />
       <div className="mx-auto mt-8 max-w-sm md:hidden" dangerouslySetInnerHTML={{ __html: tall }} />
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
+      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {t.roadmap.steps.map((s, i) => (
           <article key={s.title} className="rounded-2xl border-2 border-brown/20 bg-white p-6">
             <p className="text-sm font-bold uppercase tracking-wider text-brand-red">
@@ -33,7 +33,7 @@ export default function Roadmap() {
             <ul className="mt-4 space-y-3">
               {s.items.map((it) => (
                 <li key={it.h} className="leading-relaxed">
-                  <strong className="text-green-dark">{it.h}:</strong> {it.t}
+                  <strong className="text-green-dark">{it.h}:</strong> <RichText text={it.t} />
                 </li>
               ))}
             </ul>

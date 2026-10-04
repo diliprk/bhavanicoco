@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { REFERENCES } from "@/lib/references";
 import { useI18n } from "@/lib/i18n";
@@ -26,6 +27,31 @@ export function Section({
         <div className="mt-8">{children}</div>
       </div>
     </section>
+  );
+}
+
+// Renders text with [label](url) links, so locale strings can carry inline links.
+export function RichText({ text }: { text: string }) {
+  const parts = text.split(/(\[[^\]]+\]\(https:\/\/[^)\s]+\))/g);
+  return (
+    <>
+      {parts.map((p, i) => {
+        const m = p.match(/^\[([^\]]+)\]\((https:\/\/[^)\s]+)\)$/);
+        return m ? (
+          <a
+            key={i}
+            href={m[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-green underline decoration-gold decoration-2 underline-offset-2 hover:text-green-dark"
+          >
+            {m[1]} ↗
+          </a>
+        ) : (
+          p
+        );
+      })}
+    </>
   );
 }
 
@@ -68,6 +94,30 @@ export function Field({
       {error && <span className="mt-1 block text-xs font-semibold text-brand-red">{error}</span>}
       {!error && warn && <span className="mt-1 block text-xs font-semibold text-brown">{warn}</span>}
     </label>
+  );
+}
+
+export function InfoTip({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <span className="relative inline-flex" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        type="button"
+        aria-label={text}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        onBlur={() => setOpen(false)}
+        onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+        className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-green text-xs font-bold text-green hover:bg-green hover:text-cream"
+      >
+        i
+      </button>
+      {open && (
+        <span role="tooltip" className="absolute bottom-full left-1/2 z-10 mb-2 w-64 -translate-x-1/2 rounded-lg bg-green-dark p-3 text-xs font-normal leading-relaxed text-cream shadow-lg sm:w-80">
+          {text}
+        </span>
+      )}
+    </span>
   );
 }
 

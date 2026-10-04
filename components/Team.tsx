@@ -44,6 +44,7 @@ export default function Team() {
   return (
     <Section id="team" title={t.team.title}>
       <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-brown">{t.team.board}</h3>
+      <p className="mb-4 max-w-3xl">{t.team.boardNote}</p>
       <div className="grid gap-4 sm:grid-cols-2">
         {BOARD.map((p) => (
           <Card key={p.name.en} p={p} />

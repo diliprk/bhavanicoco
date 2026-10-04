@@ -7,7 +7,7 @@ import { submitToSheet } from "@/lib/submit";
 import { isAge, isEmail, isLinkedIn, isPhone, normalizePhone } from "@/lib/validation";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
-import { Button, Field, Input, Section, Textarea } from "./ui";
+import { Button, Field, Input, InfoTip, Section, Textarea } from "./ui";
 
 export default function Volunteer() {
   const { t, lang } = useI18n();
@@ -16,7 +16,7 @@ export default function Volunteer() {
   const formRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [roles, setRoles] = useState<string[]>([]);
-  const [v, setV] = useState({ name: "", phone: "", age: "", email: "", linkedin: "", place: "", exp: "", note: "", consent: false, website: "" });
+  const [v, setV] = useState({ name: "", phone: "", age: "", email: "", linkedin: "", place: "", exp: "", board: false, note: "", consent: false, website: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "fail">("idle");
   const [token, setToken] = useState("");
@@ -59,6 +59,7 @@ export default function Volunteer() {
       roles,
       experience: v.exp.trim(),
       note: v.note.trim(),
+      board: v.board ? "Yes" : "No",
       website: v.website,
       turnstileToken: token,
     });
@@ -118,6 +119,9 @@ export default function Volunteer() {
               <Field label={f.place} error={errors.place}>
                 <Input value={v.place} onChange={set("place")} />
               </Field>
+              <Field label={f.exp} error={errors.exp}>
+                <Input value={v.exp} onChange={set("exp")} inputMode="numeric" />
+              </Field>
               <fieldset className="sm:col-span-2">
                 <legend className="text-sm font-semibold text-green-dark">{f.roles}</legend>
                 <div className="mt-2 flex flex-wrap gap-3">
@@ -135,9 +139,18 @@ export default function Volunteer() {
                 </div>
                 {errors.roles && <p className="mt-1 text-xs font-semibold text-brand-red">{errors.roles}</p>}
               </fieldset>
-              <Field label={f.exp} error={errors.exp}>
-                <Input value={v.exp} onChange={set("exp")} inputMode="numeric" />
-              </Field>
+              <div className="flex min-h-11 items-center gap-3 sm:col-span-2">
+                <label className="flex items-center gap-3 text-sm font-semibold text-green-dark">
+                  <input
+                    type="checkbox"
+                    checked={v.board}
+                    onChange={(e) => setV((s) => ({ ...s, board: e.target.checked }))}
+                    className="h-5 w-5 accent-[#1f5d3a]"
+                  />
+                  {t.form.board}
+                </label>
+                <InfoTip text={t.form.boardTip} />
+              </div>
               <div className="sm:col-span-2">
                 <Field label={f.note} error={errors.note}>
                   <Textarea value={v.note} onChange={set("note")} />

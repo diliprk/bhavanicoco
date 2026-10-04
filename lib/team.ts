@@ -8,12 +8,12 @@ export type Person = {
 
 export const BOARD: Person[] = [
   {
-    name: { en: "Iswarya Rajamanickam", ta: "ஈஸ்வர்யா ராஜமாணிக்கம்" },
-    role: { en: "CEO", ta: "தலைமை நிர்வாக அதிகாரி (CEO)" },
+    name: { en: "Dilip Rajkumar", ta: "திலீப் ராஜ்குமார்" },
+    role: { en: "Founder and Convenor", ta: "நிறுவனர் மற்றும் ஒருங்கிணைப்பாளர்" },
   },
   {
-    name: { en: "Dilip Rajkumar", ta: "திலீப் ராஜ்குமார்" },
-    role: { en: "Technology Consultant", ta: "தொழில்நுட்ப ஆலோசகர்" },
+    name: { en: "Iswarya Rajamanickam", ta: "ஈஸ்வர்யா ராஜமாணிக்கம்" },
+    role: { en: "Founding Member", ta: "நிறுவன உறுப்பினர்" },
   },
 ];
 
