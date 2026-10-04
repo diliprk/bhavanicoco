@@ -1,6 +1,6 @@
 # Sri Bhavani Coconut Producers Society: website
 
-Static Next.js site (English / Tamil) for the society. Plan: [PLAN.md](PLAN.md). Content source: [proposal.md](proposal.md).
+Static Next.js site (English / Tamil) for the society.
 
 ## Develop
 ```
@@ -11,8 +11,8 @@ npm run export-roadmap   # regenerate public/roadmap.png (shareable image)
 ```
 
 ## Deploy to Cloudflare Pages
-- Connect this GitHub repo in Cloudflare Pages.
-- Build command: `npm run build`. Build output directory: `out`.
+- Cloudflare Workers Builds (static assets): connect this GitHub repo; wrangler.jsonc serves ./out.
+- Build command: `npm run build`. Deploy command: `npx wrangler deploy`.
 - Environment variables: see `.env.example`. Backend setup: [google-apps-script/README.md](google-apps-script/README.md).
 
 ## Notes

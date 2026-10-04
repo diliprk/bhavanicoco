@@ -12,6 +12,17 @@ export function Vision() {
       <p className="mt-4 max-w-3xl text-lg leading-relaxed">
         {t.vision.body2} <SourceLink id="cdb" label="CDB" />
       </p>
+
+      <h3 className="mt-12 font-serif text-2xl font-bold text-green">{t.vision.jobsTitle}</h3>
+      <p className="mt-2 max-w-3xl text-lg">{t.vision.jobsIntro}</p>
+      <div className="mt-6 grid gap-5 md:grid-cols-3">
+        {t.vision.jobs.map((j) => (
+          <div key={j.h} className="rounded-2xl border-2 border-brown/20 bg-white p-6">
+            <h4 className="font-serif text-lg font-bold text-green">{j.h}</h4>
+            <p className="mt-2 leading-relaxed">{j.t}</p>
+          </div>
+        ))}
+      </div>
     </Section>
   );
 }

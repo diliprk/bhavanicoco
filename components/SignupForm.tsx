@@ -5,13 +5,13 @@ import { SITE } from "@/lib/config";
 import { useI18n } from "@/lib/i18n";
 import { submitToSheet } from "@/lib/submit";
 import { ERODE_TALUKS, TALUKS_TA } from "@/lib/taluks";
-import { isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
+import { isAge, isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
 import { Button, Field, Input, Section, Select } from "./ui";
 
 const empty = {
-  name: "", phone: "", village: "", town: "", taluk: "", pin: "",
+  name: "", phone: "", age: "", village: "", town: "", taluk: "", pin: "",
   trees: "", acres: "", mapLink: "", amc: "", consent: false, website: "",
 };
 type Form = typeof empty;
@@ -34,6 +34,7 @@ export default function SignupForm() {
     const req = (k: keyof Form) => !String(v[k]).trim() && (e[k] = f.errors.required);
     (["name", "village", "town", "taluk", "amc"] as const).forEach(req);
     if (!isPhone(v.phone)) e.phone = f.errors.phone;
+    if (!isAge(v.age)) e.age = f.errors.age;
     if (!isPin(v.pin)) e.pin = f.errors.pin;
     if (!(Number(v.trees) >= SITE.minTrees)) e.trees = f.errors.trees;
     if (!(Number(v.acres) > 0)) e.acres = f.errors.acres;
@@ -46,14 +47,28 @@ export default function SignupForm() {
   const locate = () => {
     if (!navigator.geolocation) return setGeo("denied");
     setGeo("busy");
-    navigator.geolocation.getCurrentPosition(
-      (p) => {
-        setV((s) => ({ ...s, mapLink: mapsUrlFromCoords(p.coords.latitude, p.coords.longitude) }));
-        setGeo("idle");
-      },
-      () => setGeo("denied"),
-      { enableHighAccuracy: true, timeout: 15000 },
-    );
+    // Optional helper only: it never blocks submitting. Some browsers never call back if the
+    // permission prompt is ignored, so a fallback timer always frees the button.
+    let done = false;
+    const finish = (next: "idle" | "denied") => {
+      if (done) return;
+      done = true;
+      clearTimeout(fallback);
+      setGeo(next);
+    };
+    const fallback = setTimeout(() => finish("denied"), 20000);
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (p) => {
+          setV((s) => ({ ...s, mapLink: mapsUrlFromCoords(p.coords.latitude, p.coords.longitude) }));
+          finish("idle");
+        },
+        () => finish("denied"),
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 },
+      );
+    } catch {
+      finish("denied");
+    }
   };
 
   const onSubmit = async (ev: React.FormEvent) => {
@@ -67,6 +82,7 @@ export default function SignupForm() {
       lang,
       name: v.name.trim(),
       phone: normalizePhone(v.phone),
+      age: Number(v.age),
       village: v.village.trim(),
       town: v.town.trim(),
       taluk: v.taluk,
@@ -108,6 +124,9 @@ export default function SignupForm() {
             </Field>
             <Field label={f.phone} hint={f.phoneHint} error={errors.phone}>
               <Input value={v.phone} onChange={set("phone")} type="tel" inputMode="numeric" autoComplete="tel" />
+            </Field>
+            <Field label={f.age} error={errors.age}>
+              <Input value={v.age} onChange={set("age")} type="number" inputMode="numeric" min={18} max={100} />
             </Field>
             <Field label={f.village} error={errors.village}>
               <Input value={v.village} onChange={set("village")} />

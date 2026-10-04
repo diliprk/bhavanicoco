@@ -8,3 +8,5 @@ export const isMapsLink = (v: string) =>
 
 export const mapsUrlFromCoords = (lat: number, lng: number) =>
   `https://www.google.com/maps?q=${lat.toFixed(6)},${lng.toFixed(6)}`;
+export const isLinkedIn = (v: string) => /^(https?:\/\/)?([a-z]{2,3}\.)?linkedin\.com\/(in|pub|company)\/[^\s]+$/i.test(v.trim());
+export const isAge = (v: string) => /^\d{1,3}$/.test(v.trim()) && Number(v) >= 18 && Number(v) <= 100;

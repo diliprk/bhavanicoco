@@ -13,9 +13,9 @@ var TALUKS = ['Erode', 'Modakkurichi', 'Kodumudi', 'Perundurai', 'Bhavani', 'Ant
 var ROLES = { agri: 'Coconut Farm Agri Expert', sales: 'Sales & Marketing Expert', harvest: 'Harvesting Engineer / Manager' };
 
 var MEMBER_HEADERS = ['Timestamp', 'Tier', 'Name', 'Phone (WhatsApp)', 'Village/Panchayat', 'Town', 'Taluk',
-  'District', 'PIN', 'Trees', 'Acres', 'Farm map link', 'AMC interest', 'Language'];
-var VOLUNTEER_HEADERS = ['Timestamp', 'Name', 'Phone (WhatsApp)', 'Email', 'Village/Town', 'Roles',
-  'Experience (yrs)', 'Note', 'Language'];
+  'District', 'PIN', 'Trees', 'Acres', 'Farm map link', 'AMC interest', 'Language', 'Age'];
+var VOLUNTEER_HEADERS = ['Timestamp', 'Name', 'Phone (WhatsApp)', 'Email', 'District/City', 'Roles',
+  'Experience (yrs)', 'Note', 'Language', 'LinkedIn', 'Age'];
 
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
@@ -50,6 +50,13 @@ function cell_(v) { // neutralise spreadsheet formula injection
 }
 function phone_(v) { return s_(v, 20).replace(/[\s-]/g, '').replace(/^(\+91|91|0)(?=\d{10}$)/, ''); }
 
+// Age 18-100, or '' when not sent (older site versions); null when sent but invalid.
+function age_(v) {
+  if (v === undefined || v === null || v === '') return '';
+  var n = Number(v);
+  return n >= 18 && n <= 100 && n === Math.floor(n) ? n : null;
+}
+
 function sheet_(name, headers) {
   var ss = SpreadsheetApp.getActive();
   var sh = ss.getSheetByName(name);
@@ -58,12 +65,20 @@ function sheet_(name, headers) {
     sh.appendRow(headers);
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, headers.length).setFontWeight('bold');
+  } else {
+    // keep the header row in sync with this version (new or renamed columns)
+    var current = sh.getRange(1, 1, 1, Math.max(sh.getLastColumn(), headers.length)).getValues()[0];
+    if (headers.some(function (h, i) { return current[i] !== h; })) {
+      sh.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold');
+    }
   }
   return sh;
 }
 
 function handleMember_(d) {
   var phone = phone_(d.phone);
+  var age = age_(d.age);
+  if (age === null) return { ok: false, error: 'age' };
   var trees = Number(d.trees);
   var acres = Number(d.acres);
   var taluk = s_(d.taluk);
@@ -77,7 +92,7 @@ function handleMember_(d) {
 
   var tier = trees >= PRIORITY_TREES ? 'Priority' : 'Standard';
   var row = [new Date(), tier, s_(d.name), phone, s_(d.village), s_(d.town), taluk, 'Erode', pin, trees, acres,
-    s_(d.mapLink, 500), s_(d.amc, 3), s_(d.lang, 2)].map(function (v, i) { return typeof v === 'string' ? cell_(v) : v; });
+    s_(d.mapLink, 500), s_(d.amc, 3), s_(d.lang, 2), age].map(function (v, i) { return typeof v === 'string' ? cell_(v) : v; });
   sheet_('Members', MEMBER_HEADERS).appendRow(row);
 
   MailApp.sendEmail({
@@ -90,13 +105,20 @@ function handleMember_(d) {
 
 function handleVolunteer_(d) {
   var phone = phone_(d.phone);
+  var age = age_(d.age);
+  if (age === null) return { ok: false, error: 'age' };
   if (!/^[6-9]\d{9}$/.test(phone)) return { ok: false, error: 'phone' };
   if (!s_(d.name) || !s_(d.place)) return { ok: false, error: 'required' };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s_(d.email))) return { ok: false, error: 'email' };
+  if (!/^\d{1,2}$/.test(s_(d.experience, 3))) return { ok: false, error: 'experience' };
+  if (!s_(d.note)) return { ok: false, error: 'note' };
+  // LinkedIn is optional, but must look like a LinkedIn link when given
+  if (s_(d.linkedin) && !/linkedin\.com\/(in|pub|company)\//i.test(s_(d.linkedin, 300))) return { ok: false, error: 'linkedin' };
   var roles = (d.roles || []).map(function (r) { return ROLES[r]; }).filter(Boolean);
   if (!roles.length) return { ok: false, error: 'roles' };
 
   var row = [new Date(), s_(d.name), phone, s_(d.email), s_(d.place), roles.join(', '), s_(d.experience, 20),
-    s_(d.note, 1000), s_(d.lang, 2)].map(function (v) { return typeof v === 'string' ? cell_(v) : v; });
+    s_(d.note, 1000), s_(d.lang, 2), s_(d.linkedin, 300), age].map(function (v) { return typeof v === 'string' ? cell_(v) : v; });
   sheet_('Volunteers', VOLUNTEER_HEADERS).appendRow(row);
 
   MailApp.sendEmail({

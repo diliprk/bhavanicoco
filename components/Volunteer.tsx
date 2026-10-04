@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/config";
 import { submitToSheet } from "@/lib/submit";
-import { isEmail, isPhone, normalizePhone } from "@/lib/validation";
+import { isAge, isEmail, isLinkedIn, isPhone, normalizePhone } from "@/lib/validation";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
 import { Button, Field, Input, Section, Textarea } from "./ui";
@@ -16,7 +16,7 @@ export default function Volunteer() {
   const formRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [roles, setRoles] = useState<string[]>([]);
-  const [v, setV] = useState({ name: "", phone: "", email: "", place: "", exp: "", note: "", consent: false, website: "" });
+  const [v, setV] = useState({ name: "", phone: "", age: "", email: "", linkedin: "", place: "", exp: "", note: "", consent: false, website: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "fail">("idle");
   const [token, setToken] = useState("");
@@ -35,8 +35,12 @@ export default function Volunteer() {
     const e: Record<string, string> = {};
     if (!v.name.trim()) e.name = t.form.errors.required;
     if (!isPhone(v.phone)) e.phone = t.form.errors.phone;
-    if (v.email.trim() && !isEmail(v.email)) e.email = f.errors.email;
+    if (!isAge(v.age)) e.age = t.form.errors.age;
+    if (!isEmail(v.email)) e.email = f.errors.email;
+    if (v.linkedin.trim() && !isLinkedIn(v.linkedin)) e.linkedin = f.errors.linkedin;
     if (!v.place.trim()) e.place = t.form.errors.required;
+    if (!/^\d{1,2}$/.test(v.exp.trim()) || Number(v.exp) > 70) e.exp = f.errors.exp;
+    if (!v.note.trim()) e.note = t.form.errors.required;
     if (!roles.length) e.roles = f.errors.roles;
     if (!v.consent) e.consent = t.form.errors.consent;
     if (SITE.turnstileSiteKey && !token) e.captcha = t.form.errors.captcha;
@@ -48,7 +52,9 @@ export default function Volunteer() {
       lang,
       name: v.name.trim(),
       phone: normalizePhone(v.phone),
+      age: Number(v.age),
       email: v.email.trim(),
+      linkedin: v.linkedin.trim(),
       place: v.place.trim(),
       roles,
       experience: v.exp.trim(),
@@ -98,9 +104,17 @@ export default function Volunteer() {
               <Field label={f.phone} error={errors.phone}>
                 <Input value={v.phone} onChange={set("phone")} type="tel" inputMode="numeric" autoComplete="tel" />
               </Field>
+              <Field label={t.form.age} error={errors.age}>
+                <Input value={v.age} onChange={set("age")} type="number" inputMode="numeric" min={18} max={100} />
+              </Field>
               <Field label={f.email} error={errors.email}>
                 <Input value={v.email} onChange={set("email")} type="email" autoComplete="email" />
               </Field>
+              <div className="sm:col-span-2">
+                <Field label={f.linkedin} error={errors.linkedin}>
+                  <Input value={v.linkedin} onChange={set("linkedin")} type="url" placeholder="https://www.linkedin.com/in/your-name" />
+                </Field>
+              </div>
               <Field label={f.place} error={errors.place}>
                 <Input value={v.place} onChange={set("place")} />
               </Field>
@@ -121,11 +135,11 @@ export default function Volunteer() {
                 </div>
                 {errors.roles && <p className="mt-1 text-xs font-semibold text-brand-red">{errors.roles}</p>}
               </fieldset>
-              <Field label={f.exp}>
+              <Field label={f.exp} error={errors.exp}>
                 <Input value={v.exp} onChange={set("exp")} inputMode="numeric" />
               </Field>
               <div className="sm:col-span-2">
-                <Field label={f.note}>
+                <Field label={f.note} error={errors.note}>
                   <Textarea value={v.note} onChange={set("note")} />
                 </Field>
               </div>
