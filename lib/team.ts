@@ -9,7 +9,7 @@ export type Person = {
 export const BOARD: Person[] = [
   {
     name: { en: "Dilip Rajkumar", ta: "திலீப் ராஜ்குமார்" },
-    role: { en: "Founder and Convenor", ta: "நிறுவனர் மற்றும் ஒருங்கிணைப்பாளர்" },
+    role: { en: "Founding Member", ta: "நிறுவன உறுப்பினர்" },
   },
   {
     name: { en: "Iswarya Rajamanickam", ta: "ஈஸ்வர்யா ராஜமாணிக்கம்" },

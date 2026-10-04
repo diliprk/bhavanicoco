@@ -94,8 +94,7 @@ export default function Volunteer() {
           <h3 className="font-serif text-2xl font-bold text-green">{f.title}</h3>
           {status === "ok" ? (
             <div role="status" className="mt-4">
-              <p className="mb-4 text-lg font-semibold text-green">{f.ok}</p>
-              <ContactLinks />
+              <p className="text-lg font-semibold text-green">{f.ok}</p>
             </div>
           ) : (
             <form onSubmit={onSubmit} noValidate className="mt-5 grid gap-5 sm:grid-cols-2">

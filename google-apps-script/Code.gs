@@ -6,6 +6,8 @@
 
 var NOTIFY_TO = 'sribhavani.cocosociety@gmail.com';
 var NOTIFY_CC = 'diliprajkumar@gmail.com';
+// Founding members' Google Group: gets a short heads-up with NO personal details (no name, phone, map link).
+var NOTIFY_GROUP = 'sribhavani-cocops@googlegroups.com';
 var PRIORITY_TREES = 100;
 var MIN_TREES = 10;
 var TALUKS = ['Erode', 'Modakkurichi', 'Kodumudi', 'Perundurai', 'Bhavani', 'Anthiyur',
@@ -60,6 +62,17 @@ function age_(v) {
 // 'Yes' / 'No', or '' when not sent (older site versions)
 function yn_(v) { v = s_(v, 3); return v === 'Yes' || v === 'No' ? v : ''; }
 
+// Never lets a group-mail problem break the applicant's submission.
+function notifyGroup_(subject, lines) {
+  try {
+    MailApp.sendEmail({
+      to: NOTIFY_GROUP,
+      subject: subject,
+      body: lines.join('\n') + '\n\nFull details are in the SBCPS Applications sheet.'
+    });
+  } catch (err) {}
+}
+
 function sheet_(name, headers) {
   var ss = SpreadsheetApp.getActive();
   var sh = ss.getSheetByName(name);
@@ -103,6 +116,8 @@ function handleMember_(d) {
     subject: 'New member application (' + tier + '): ' + s_(d.name) + ', ' + taluk,
     body: MEMBER_HEADERS.map(function (h, i) { return h + ': ' + row[i]; }).join('\n')
   });
+  notifyGroup_('New member application (' + tier + '), ' + taluk + ' taluk',
+    ['A new farmer has applied for membership.', 'Tier: ' + tier, 'Taluk: ' + taluk]);
   return { ok: true };
 }
 
@@ -129,6 +144,8 @@ function handleVolunteer_(d) {
     subject: 'New volunteer: ' + s_(d.name) + ' (' + roles.join(', ') + ')',
     body: VOLUNTEER_HEADERS.map(function (h, i) { return h + ': ' + row[i]; }).join('\n')
   });
+  notifyGroup_('New volunteer: ' + roles.join(', '),
+    ['A new volunteer has applied.', 'Roles: ' + roles.join(', '), 'Experience: ' + s_(d.experience, 20) + ' years']);
   return { ok: true };
 }
 

@@ -145,7 +145,7 @@ export const en = {
     submit: "Apply for Membership",
     sending: "Sending...",
     ok: "Thank you! Your application has been received.",
-    okSub: "We will contact you on WhatsApp soon. You can also reach us directly:",
+    okSub: "We will contact you on WhatsApp soon.",
     fail: "Sorry, we could not send your application. Please try again, or contact us directly on WhatsApp:",
     errors: {
       required: "This field is required",

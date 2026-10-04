@@ -18,5 +18,8 @@ Do this while signed in as **sribhavani.cocosociety@gmail.com**.
 ## Updating the script later
 Deploy > Manage deployments > edit (pencil) > Version: New version > Deploy. The URL stays the same.
 
+## Founding members group notification
+`NOTIFY_GROUP` in `Code.gs` is the founding members' Google Group. On every application it gets a short email with only the tier and taluk (members) or roles and experience (volunteers), never names, phone numbers or map links. The full-detail email still goes only to `NOTIFY_TO` and `NOTIFY_CC`. In the group settings, set "Who can post" to group managers or members, and make sure the sending account is a manager.
+
 ## What the Summary tab shows
 Total interested farmers, Priority (100+ trees) vs Standard (10-99), how many are beyond the first 40 (to form additional societies), count per taluk, and total volunteers. It is internal only; nothing is shown on the public site.

@@ -115,8 +115,7 @@ export default function SignupForm() {
         {status === "ok" ? (
           <div role="status">
             <p className="font-serif text-2xl font-bold text-green">{f.ok}</p>
-            <p className="mb-5 mt-2">{f.okSub}</p>
-            <ContactLinks />
+            <p className="mt-2">{f.okSub}</p>
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
