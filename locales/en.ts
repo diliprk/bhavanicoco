@@ -135,7 +135,7 @@ export const en = {
     mapDenied: "Could not get your location. You can paste a Google Maps link instead, or leave this blank and apply anyway.",
     amc: "Interested in future AMC farm management?",
     boardTip:
-      "At the first general meeting, founding members nominate candidates and elect the Board of Directors, with one vote per member. Directors then serve a fixed term set by the bye-laws and are re-elected by the members.",
+      "At the first general meeting, founding members nominate candidates and elect the Board of Directors, with one vote per member. Directors then serve a fixed term set by the bye-laws and are re-elected by the members. Founding members are expected to volunteer their time and to be helpful and considerate in assisting society members with their queries and needs.",
     board: "I am interested in being a Founding / Board Member",
     yes: "Yes",
     no: "No",
