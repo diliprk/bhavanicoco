@@ -37,6 +37,16 @@ export const REFERENCES: Record<string, Reference> = {
       ta: "எங்கள் தகுதி விதிகளில் பயன்படுத்தப்படும் ஈரோடு மாவட்டத்தின் 10 வட்டங்கள்.",
     },
   },
+  products: {
+    id: "products",
+    url: "https://coconutboard.gov.in/CoconutProducts.aspx",
+    label: { en: "Coconut Products (Coconut Development Board)", ta: "தேங்காய் பொருட்கள் (தேங்காய் வளர்ச்சி வாரியம்)" },
+    note: {
+      en: "Value-added coconut products the society can explore for better returns.",
+      ta: "சிறந்த வருமானத்திற்காக சங்கம் ஆராயக்கூடிய மதிப்பு கூட்டப்பட்ட தேங்காய் பொருட்கள்.",
+    },
+  },
 };
 
-export const REFERENCE_LIST = Object.values(REFERENCES);
+// "erode" stays in REFERENCES for the inline taluks link, but is not shown as a card in the footer.
+export const REFERENCE_LIST = Object.values(REFERENCES).filter((r) => r.id !== "erode");
