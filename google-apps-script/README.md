@@ -1,0 +1,22 @@
+# Deploying the form backend
+
+Do this while signed in as **sribhavani.cocosociety@gmail.com**.
+
+1. Create a new Google Sheet named "SBCPS Applications".
+2. Extensions > Apps Script. Delete the sample code and paste in `Code.gs`.
+3. Project Settings > tick "Show appsscript.json manifest file" and replace its contents with `appsscript.json` from this folder.
+4. Select the `setup` function and click Run. Approve the permissions (Sheets, Gmail send, external requests). This creates the **Members**, **Volunteers** and **Summary** tabs.
+5. Deploy > New deployment > type **Web app**. Execute as: **Me**. Who has access: **Anyone**. Copy the Web app URL (ends in `/exec`).
+6. In Cloudflare Pages (Settings > Environment variables), set `NEXT_PUBLIC_APPS_SCRIPT_URL` to that URL, then redeploy.
+7. Test: open the live site, submit a test application, and check the Sheet row and the email (to sribhavani.cocosociety@gmail.com, cc diliprajkumar@gmail.com).
+
+## Spam protection (Cloudflare Turnstile, optional but recommended)
+1. Cloudflare dashboard > Turnstile > Add widget, with your site's domain. Copy the site key and secret key.
+2. Pages env var `NEXT_PUBLIC_TURNSTILE_SITE_KEY` = site key.
+3. Apps Script > Project Settings > Script properties > add `TURNSTILE_SECRET` = secret key.
+
+## Updating the script later
+Deploy > Manage deployments > edit (pencil) > Version: New version > Deploy. The URL stays the same.
+
+## What the Summary tab shows
+Total interested farmers, Priority (100+ trees) vs Standard (10-99), how many are beyond the first 40 (to form additional societies), count per taluk, and total volunteers. It is internal only; nothing is shown on the public site.

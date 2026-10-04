@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Palette taken from logo.svg */
+:root {
+  --green: #1f5d3a;
+  --green-dark: #164a2d;
+  --leaf: #3a9a5c;
+  --gold: #e8b030;
+  --cream: #f8edd3;
+  --paper: #fff8e6;
+  --red: #c1121f;
+  --brown: #a8723a;
+  --ink: #2b2118;
+}
+
+@theme inline {
+  --color-green: var(--green);
+  --color-green-dark: var(--green-dark);
+  --color-leaf: var(--leaf);
+  --color-gold: var(--gold);
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-brand-red: var(--red);
+  --color-brown: var(--brown);
+  --color-ink: var(--ink);
+  --font-sans: var(--font-geist-sans), var(--font-tamil), system-ui, sans-serif;
+  --font-serif: var(--font-display), var(--font-tamil), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
