@@ -16,7 +16,6 @@ export const en = {
       "A localized, farmer-owned collective dedicated to eliminating middlemen, maximizing the per-nut value for our farmers, and building a sustainable coconut processing ecosystem in the Bhavani region.",
     cta: "Apply for Membership",
     cta2: "Volunteer with us",
-    badge: "Founding cohort: only 40 seats",
   },
   vision: {
     title: "Our Vision & Mission",
@@ -105,7 +104,7 @@ export const en = {
         sub: "Evolving into a formidable agricultural enterprise with a dedicated B2B and B2C presence.",
         items: [
           { h: "Robust distribution", t: "Direct-to-buyer marketing channels and retail networks, bypassing traditional wholesale mandis." },
-          { h: "Coir value chain", t: "Using market analysis to manufacture coir ropes, eco-friendly gunny bags and coir mattresses from our extracted fibre." },
+          { h: "Coir value chain", t: "Using market analysis to manufacture coir ropes, eco-friendly gunny bags and coir mattresses from our extracted fibre. [Watch this video](https://www.youtube.com/watch?v=gdmEUVOG1nQ)" },
         ],
       },
     ],

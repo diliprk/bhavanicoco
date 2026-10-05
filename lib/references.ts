@@ -37,6 +37,15 @@ export const REFERENCES: Record<string, Reference> = {
       ta: "எங்கள் தகுதி விதிகளில் பயன்படுத்தப்படும் ஈரோடு மாவட்டத்தின் 10 வட்டங்கள்.",
     },
   },
+  tancoir: {
+    id: "tancoir",
+    url: "https://www.tancoir.com/",
+    label: { en: "TANCOIR (Tamil Nadu coir)", ta: "TANCOIR (தமிழ்நாடு நார்)" },
+    note: {
+      en: "Tamil Nadu's coir organisation: coir products, schemes and market information.",
+      ta: "தமிழ்நாட்டின் நார் அமைப்பு: நார் பொருட்கள், திட்டங்கள் மற்றும் சந்தை தகவல்கள்.",
+    },
+  },
   products: {
     id: "products",
     url: "https://coconutboard.gov.in/CoconutProducts.aspx",
@@ -48,5 +57,5 @@ export const REFERENCES: Record<string, Reference> = {
   },
 };
 
-// "erode" stays in REFERENCES for the inline taluks link, but is not shown as a card in the footer.
-export const REFERENCE_LIST = Object.values(REFERENCES).filter((r) => r.id !== "erode");
+// "erode" and "cdb" stay in REFERENCES for inline links, but are not shown as cards in the footer.
+export const REFERENCE_LIST = Object.values(REFERENCES).filter((r) => r.id !== "erode" && r.id !== "cdb");

@@ -9,8 +9,7 @@ export default function Hero() {
     <div id="top" className="bg-green text-cream">
       <div className="mx-auto grid max-w-5xl items-center gap-8 px-4 py-14 sm:py-20 md:grid-cols-[1.4fr_1fr]">
         <div>
-          <p className="inline-block rounded-full bg-gold px-4 py-1 text-sm font-bold text-ink">{t.hero.badge}</p>
-          <h1 className="mt-4 font-serif text-3xl font-bold leading-tight sm:text-5xl">Sri Bhavani Coconut Producers Society</h1>
+          <h1 className="font-serif text-3xl font-bold leading-tight sm:text-5xl">Sri Bhavani Coconut Producers Society</h1>
           <p className="mt-4 text-xl font-semibold text-gold sm:text-2xl">{t.hero.tagline}</p>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-cream/90">{t.hero.intro}</p>
           <div className="mt-7 flex flex-wrap gap-3">
