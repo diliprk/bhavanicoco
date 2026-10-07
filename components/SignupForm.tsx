@@ -6,6 +6,7 @@ import { useI18n } from "@/lib/i18n";
 import { submitToSheet } from "@/lib/submit";
 import { ERODE_TALUKS, TALUKS_TA } from "@/lib/taluks";
 import { isAge, isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
+import JoinGroup from "./JoinGroup";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
 import { Button, Field, Input, InfoTip, Section, Select } from "./ui";
@@ -116,6 +117,7 @@ export default function SignupForm() {
           <div role="status">
             <p className="font-serif text-2xl font-bold text-green">{f.ok}</p>
             <p className="mt-2">{f.okSub}</p>
+            <JoinGroup />
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">

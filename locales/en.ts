@@ -144,6 +144,7 @@ export const en = {
     submit: "Apply for Membership",
     sending: "Sending...",
     ok: "Thank you! Your application has been received.",
+    joinGroup: { title: "Join our WhatsApp group", sub: "Scan the QR code or tap the button to join the group.", button: "Join WhatsApp group" },
     okSub: "We will contact you on WhatsApp soon.",
     fail: "Sorry, we could not send your application. Please try again, or contact us directly on WhatsApp:",
     errors: {

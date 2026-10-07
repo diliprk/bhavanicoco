@@ -6,6 +6,7 @@ export const SITE = {
     { name: "Iswarya Rajamanickam", phone: "+919787225256", display: "+91 97872 25256" },
     { name: "Dilip Rajkumar", phone: "+917708385855", display: "+91 77083 85855" },
   ],
+  whatsappGroup: "https://chat.whatsapp.com/F4qOGUdem934z0Ge7nimGU?mode=gi_t",
   appsScriptUrl: process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? "",
   turnstileSiteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "",
   foundingSeats: 40,

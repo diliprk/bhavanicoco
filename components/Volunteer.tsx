@@ -5,6 +5,7 @@ import { useI18n } from "@/lib/i18n";
 import { SITE } from "@/lib/config";
 import { submitToSheet } from "@/lib/submit";
 import { isAge, isEmail, isLinkedIn, isPhone, normalizePhone } from "@/lib/validation";
+import JoinGroup from "./JoinGroup";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
 import { Button, Field, Input, InfoTip, Section, Textarea } from "./ui";
@@ -95,6 +96,7 @@ export default function Volunteer() {
           {status === "ok" ? (
             <div role="status" className="mt-4">
               <p className="text-lg font-semibold text-green">{f.ok}</p>
+              <JoinGroup />
             </div>
           ) : (
             <form onSubmit={onSubmit} noValidate className="mt-5 grid gap-5 sm:grid-cols-2">
