@@ -5,8 +5,7 @@
  */
 
 var NOTIFY_TO = 'sribhavani.cocosociety@gmail.com';
-var NOTIFY_CC = 'diliprajkumar@gmail.com';
-// Founding members' Google Group: gets a short heads-up with NO personal details (no name, phone, map link).
+// Founding members' Google Group: gets the full application details (the founders are members of the group).
 var NOTIFY_GROUP = 'sribhavani-cocops@googlegroups.com';
 var PRIORITY_TREES = 100;
 var MIN_TREES = 10;
@@ -15,7 +14,7 @@ var TALUKS = ['Erode', 'Modakkurichi', 'Kodumudi', 'Perundurai', 'Bhavani', 'Ant
 var ROLES = { agri: 'Coconut Farm Agri Expert', sales: 'Sales & Marketing Expert', harvest: 'Harvesting Engineer / Manager' };
 
 var MEMBER_HEADERS = ['Timestamp', 'Tier', 'Name', 'Phone (WhatsApp)', 'Village/Panchayat', 'Town', 'Taluk',
-  'District', 'PIN', 'Trees', 'Acres', 'Farm map link', 'AMC interest', 'Language', 'Age', 'Founding/Board interest'];
+  'District', 'PIN', 'Trees', 'Acres', 'Farm map link', 'AMC interest', 'Language', 'Age', 'Founding/Board interest', 'Email'];
 var VOLUNTEER_HEADERS = ['Timestamp', 'Name', 'Phone (WhatsApp)', 'Email', 'District/City', 'Roles',
   'Experience (yrs)', 'Note', 'Language', 'LinkedIn', 'Age', 'Founding/Board interest'];
 
@@ -104,20 +103,37 @@ function handleMember_(d) {
   if (!(acres > 0)) return { ok: false, error: 'acres' };
   if (TALUKS.indexOf(taluk) < 0) return { ok: false, error: 'taluk (Erode district only)' };
   if (!/^\d{6}$/.test(pin)) return { ok: false, error: 'pin' };
-  if (!s_(d.name) || !s_(d.village) || !s_(d.town)) return { ok: false, error: 'required' };
+  if (!s_(d.name) || !s_(d.village) || !s_(d.town) || !s_(d.mapLink) || !s_(d.amc)) return { ok: false, error: 'required' };
+  var email = s_(d.email);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ok: false, error: 'email' };
 
   var tier = trees >= PRIORITY_TREES ? 'Priority' : 'Standard';
   var row = [new Date(), tier, s_(d.name), phone, s_(d.village), s_(d.town), taluk, 'Erode', pin, trees, acres,
-    s_(d.mapLink, 500), s_(d.amc, 3), s_(d.lang, 2), age, yn_(d.board)].map(function (v, i) { return typeof v === 'string' ? cell_(v) : v; });
+    s_(d.mapLink, 500), s_(d.amc, 3), s_(d.lang, 2), age, yn_(d.board), email].map(function (v, i) { return typeof v === 'string' ? cell_(v) : v; });
   sheet_('Members', MEMBER_HEADERS).appendRow(row);
 
   MailApp.sendEmail({
-    to: NOTIFY_TO, cc: NOTIFY_CC,
+    to: NOTIFY_TO,
     subject: 'New member application (' + tier + '): ' + s_(d.name) + ', ' + taluk,
     body: MEMBER_HEADERS.map(function (h, i) { return h + ': ' + row[i]; }).join('\n')
   });
   notifyGroup_('New member application (' + tier + '), ' + taluk + ' taluk',
-    ['A new farmer has applied for membership.', 'Tier: ' + tier, 'Taluk: ' + taluk]);
+    ['A new farmer has applied for membership.', '',
+      'Tier: ' + tier,
+      'Name: ' + s_(d.name),
+      'Phone (WhatsApp): ' + phone,
+      'Email: ' + email,
+      'Age: ' + (age === '' ? 'Not given' : age),
+      'Village/Panchayat: ' + s_(d.village),
+      'Town: ' + s_(d.town),
+      'Taluk: ' + taluk,
+      'District: Erode',
+      'PIN: ' + pin,
+      'Trees: ' + trees,
+      'Acres: ' + acres,
+      'Farm map link: ' + s_(d.mapLink, 500),
+      'AMC interest: ' + s_(d.amc, 3),
+      'Founding/Board interest: ' + (yn_(d.board) || 'No')]);
   return { ok: true };
 }
 
@@ -140,12 +156,22 @@ function handleVolunteer_(d) {
   sheet_('Volunteers', VOLUNTEER_HEADERS).appendRow(row);
 
   MailApp.sendEmail({
-    to: NOTIFY_TO, cc: NOTIFY_CC,
+    to: NOTIFY_TO,
     subject: 'New volunteer: ' + s_(d.name) + ' (' + roles.join(', ') + ')',
     body: VOLUNTEER_HEADERS.map(function (h, i) { return h + ': ' + row[i]; }).join('\n')
   });
   notifyGroup_('New volunteer: ' + roles.join(', '),
-    ['A new volunteer has applied.', 'Roles: ' + roles.join(', '), 'Experience: ' + s_(d.experience, 20) + ' years']);
+    ['A new volunteer has applied.', '',
+      'Name: ' + s_(d.name),
+      'Phone (WhatsApp): ' + phone,
+      'Email: ' + s_(d.email),
+      'Place: ' + s_(d.place),
+      'Age: ' + (age === '' ? 'Not given' : age),
+      'Roles: ' + roles.join(', '),
+      'Experience: ' + s_(d.experience, 20) + ' years',
+      'LinkedIn: ' + (s_(d.linkedin, 300) || 'Not given'),
+      'Founding/Board interest: ' + (yn_(d.board) || 'No'),
+      'Note: ' + s_(d.note, 1000)]);
   return { ok: true };
 }
 

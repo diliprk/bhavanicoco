@@ -3,7 +3,7 @@
 import { SITE, waLink } from "@/lib/config";
 import { useI18n } from "@/lib/i18n";
 
-// Lists both WhatsApp numbers with chat and call links, plus the society email.
+// Lists the WhatsApp numbers with chat and call links, plus the society email.
 export default function ContactLinks({ dark = false }: { dark?: boolean }) {
   const { t } = useI18n();
   const pill = dark

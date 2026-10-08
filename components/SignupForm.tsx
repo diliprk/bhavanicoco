@@ -5,14 +5,14 @@ import { SITE } from "@/lib/config";
 import { useI18n } from "@/lib/i18n";
 import { submitToSheet } from "@/lib/submit";
 import { ERODE_TALUKS, TALUKS_TA } from "@/lib/taluks";
-import { isAge, isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
+import { isAge, isEmail, isErodePin, isMapsLink, isPhone, isPin, mapsUrlFromCoords, normalizePhone } from "@/lib/validation";
 import JoinGroup from "./JoinGroup";
 import ContactLinks from "./ContactLinks";
 import Turnstile from "./Turnstile";
 import { Button, Field, Input, InfoTip, Section, Select } from "./ui";
 
 const empty = {
-  name: "", phone: "", age: "", village: "", town: "", taluk: "", pin: "",
+  name: "", phone: "", email: "", age: "", village: "", town: "", taluk: "", pin: "",
   trees: "", acres: "", mapLink: "", amc: "", board: false, consent: false, website: "",
 };
 type Form = typeof empty;
@@ -34,12 +34,13 @@ export default function SignupForm() {
     const e: Record<string, string> = {};
     const req = (k: keyof Form) => !String(v[k]).trim() && (e[k] = f.errors.required);
     (["name", "village", "town", "taluk", "amc"] as const).forEach(req);
+    if (!isEmail(v.email)) e.email = f.errors.email;
     if (!isPhone(v.phone)) e.phone = f.errors.phone;
-    if (!isAge(v.age)) e.age = f.errors.age;
+    if (v.age.trim() && !isAge(v.age)) e.age = f.errors.age;
     if (!isPin(v.pin)) e.pin = f.errors.pin;
     if (!(Number(v.trees) >= SITE.minTrees)) e.trees = f.errors.trees;
     if (!(Number(v.acres) > 0)) e.acres = f.errors.acres;
-    if (v.mapLink.trim() && !isMapsLink(v.mapLink)) e.mapLink = f.errors.map;
+    if (!isMapsLink(v.mapLink)) e.mapLink = f.errors.map;
     if (!v.consent) e.consent = f.errors.consent;
     if (SITE.turnstileSiteKey && !token) e.captcha = f.errors.captcha;
     return e;
@@ -48,7 +49,7 @@ export default function SignupForm() {
   const locate = () => {
     if (!navigator.geolocation) return setGeo("denied");
     setGeo("busy");
-    // Optional helper only: it never blocks submitting. Some browsers never call back if the
+    // Helper to fill the map link. Some browsers never call back if the
     // permission prompt is ignored, so a fallback timer always frees the button.
     let done = false;
     const finish = (next: "idle" | "denied") => {
@@ -83,7 +84,8 @@ export default function SignupForm() {
       lang,
       name: v.name.trim(),
       phone: normalizePhone(v.phone),
-      age: Number(v.age),
+      email: v.email.trim(),
+      age: v.age.trim() ? Number(v.age) : "",
       village: v.village.trim(),
       town: v.town.trim(),
       taluk: v.taluk,
@@ -121,22 +123,25 @@ export default function SignupForm() {
           </div>
         ) : (
           <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
-            <Field label={f.name} error={errors.name}>
+            <Field required label={f.name} error={errors.name}>
               <Input value={v.name} onChange={set("name")} autoComplete="name" />
             </Field>
-            <Field label={f.phone} hint={f.phoneHint} error={errors.phone}>
+            <Field required label={f.phone} hint={f.phoneHint} error={errors.phone}>
               <Input value={v.phone} onChange={set("phone")} type="tel" inputMode="numeric" autoComplete="tel" />
+            </Field>
+            <Field required label={f.email} error={errors.email}>
+              <Input value={v.email} onChange={set("email")} type="email" inputMode="email" autoComplete="email" />
             </Field>
             <Field label={f.age} error={errors.age}>
               <Input value={v.age} onChange={set("age")} type="number" inputMode="numeric" min={18} max={100} />
             </Field>
-            <Field label={f.village} error={errors.village}>
+            <Field required label={f.village} error={errors.village}>
               <Input value={v.village} onChange={set("village")} />
             </Field>
-            <Field label={f.town} error={errors.town}>
+            <Field required label={f.town} error={errors.town}>
               <Input value={v.town} onChange={set("town")} />
             </Field>
-            <Field label={f.taluk} error={errors.taluk}>
+            <Field required label={f.taluk} error={errors.taluk}>
               <Select value={v.taluk} onChange={set("taluk")}>
                 <option value="">{f.taluk0}</option>
                 {ERODE_TALUKS.map((tk) => (
@@ -149,16 +154,16 @@ export default function SignupForm() {
             <Field label={f.district}>
               <Input value={lang === "ta" ? "ஈரோடு (Erode)" : "Erode"} readOnly className="bg-cream" />
             </Field>
-            <Field label={f.pin} error={errors.pin} warn={pinWarn}>
+            <Field required label={f.pin} error={errors.pin} warn={pinWarn}>
               <Input value={v.pin} onChange={set("pin")} inputMode="numeric" maxLength={6} autoComplete="postal-code" />
             </Field>
-            <Field label={f.trees} hint={f.treesHint} error={errors.trees}>
+            <Field required label={f.trees} hint={f.treesHint} error={errors.trees}>
               <Input value={v.trees} onChange={set("trees")} type="number" inputMode="numeric" min={SITE.minTrees} />
             </Field>
-            <Field label={f.acres} error={errors.acres}>
+            <Field required label={f.acres} error={errors.acres}>
               <Input value={v.acres} onChange={set("acres")} type="number" inputMode="decimal" min={0} step="0.01" />
             </Field>
-            <Field label={f.amc} error={errors.amc}>
+            <Field required label={f.amc} error={errors.amc}>
               <Select value={v.amc} onChange={set("amc")}>
                 <option value="">{f.choose}</option>
                 <option value="Yes">{f.yes}</option>
@@ -178,7 +183,7 @@ export default function SignupForm() {
               <InfoTip text={f.boardTip} />
             </div>
             <div className="sm:col-span-2">
-              <Field label={f.map} hint={f.mapHint} error={errors.mapLink}>
+              <Field required label={f.map} hint={f.mapHint} error={errors.mapLink}>
                 <Input value={v.mapLink} onChange={set("mapLink")} type="url" placeholder="https://maps.app.goo.gl/..." />
               </Field>
               <button type="button" onClick={locate} disabled={geo === "busy"} className="mt-2 min-h-11 rounded-full border-2 border-green px-4 text-sm font-bold text-green hover:bg-green hover:text-cream">
@@ -203,7 +208,12 @@ export default function SignupForm() {
                   onChange={(e) => setV((s) => ({ ...s, consent: e.target.checked }))}
                   className="mt-1 h-5 w-5 accent-[#1f5d3a]"
                 />
-                <span>{f.consent}</span>
+                <span>
+                  {f.consent}
+                  <span aria-hidden="true" className="ml-0.5 text-brand-red">
+                    *
+                  </span>
+                </span>
               </label>
               {errors.consent && <p className="mt-1 text-xs font-semibold text-brand-red">{errors.consent}</p>}
             </div>

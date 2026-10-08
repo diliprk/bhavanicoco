@@ -78,17 +78,24 @@ export function Field({
   hint,
   error,
   warn,
+  required,
   children,
 }: {
   label: string;
   hint?: string;
   error?: string;
   warn?: string;
+  required?: boolean;
   children: ReactNode;
 }) {
   return (
     <label className="block text-sm font-semibold text-green-dark">
       {label}
+      {required && (
+        <span aria-hidden="true" className="ml-0.5 text-brand-red">
+          *
+        </span>
+      )}
       {children}
       {hint && !error && <span className="mt-1 block text-xs font-normal text-ink/70">{hint}</span>}
       {error && <span className="mt-1 block text-xs font-semibold text-brand-red">{error}</span>}

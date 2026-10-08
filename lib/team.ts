@@ -15,6 +15,10 @@ export const BOARD: Person[] = [
     name: { en: "Iswarya Rajamanickam", ta: "ஈஸ்வர்யா ராஜமாணிக்கம்" },
     role: { en: "Founding Member", ta: "நிறுவன உறுப்பினர்" },
   },
+  {
+    name: { en: "Ponpradeepa Jayanth", ta: "பொன்பிரதீபா ஜெயந்த்" },
+    role: { en: "Founding Member", ta: "நிறுவன உறுப்பினர்" },
+  },
 ];
 
 export const ADVISORS: Person[] = [

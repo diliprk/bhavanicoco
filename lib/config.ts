@@ -1,10 +1,11 @@
 export const SITE = {
   name: "Sri Bhavani Coconut Producers Society",
   email: "sribhavani.cocosociety@gmail.com",
-  // Both numbers are WhatsApp numbers and also accept calls.
+  // All numbers are WhatsApp numbers and also accept calls.
   contacts: [
     { name: "Iswarya Rajamanickam", phone: "+919787225256", display: "+91 97872 25256" },
     { name: "Dilip Rajkumar", phone: "+917708385855", display: "+91 77083 85855" },
+    { name: "Ponpradeepa Jayanth", phone: "+919080922990", display: "+91 90809 22990" },
   ],
   whatsappGroup: "https://chat.whatsapp.com/F4qOGUdem934z0Ge7nimGU?mode=gi_t",
   appsScriptUrl: process.env.NEXT_PUBLIC_APPS_SCRIPT_URL ?? "",
