@@ -53,7 +53,7 @@ export const viewport: Viewport = { themeColor: "#1f5d3a" };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${display.variable} ${tamil.variable} antialiased`}>
-      <body>
+      <body suppressHydrationWarning>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

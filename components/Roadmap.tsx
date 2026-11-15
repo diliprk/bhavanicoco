@@ -21,7 +21,7 @@ export default function Roadmap() {
       <div className="mt-8 hidden md:block" dangerouslySetInnerHTML={{ __html: wide }} />
       <div className="mx-auto mt-8 max-w-sm md:hidden" dangerouslySetInnerHTML={{ __html: tall }} />
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-10 grid gap-6 items-start md:grid-cols-2 xl:grid-cols-4">
         {t.roadmap.steps.map((s, i) => (
           <article key={s.title} className="rounded-2xl border-2 border-brown/20 bg-white p-6">
             <p className="text-sm font-bold uppercase tracking-wider text-brand-red">
@@ -37,6 +37,21 @@ export default function Roadmap() {
                 </li>
               ))}
             </ul>
+            {s.more?.map((m) => (
+              <details key={m.title} className="group mt-4 rounded-lg border border-brown/20 bg-cream/40">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2 font-semibold text-green-dark [&::-webkit-details-marker]:hidden">
+                  {m.title}
+                  <span aria-hidden className="text-brand-red transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <ul className="space-y-3 px-3 pb-3 pt-1">
+                  {m.items.map((it) => (
+                    <li key={it.h} className="leading-relaxed">
+                      <strong className="text-green-dark">{it.h}:</strong> <RichText text={it.t} />
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
           </article>
         ))}
       </div>

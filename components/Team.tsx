@@ -28,7 +28,22 @@ function Card({ p }: { p: Person }) {
       <div>
         <h4 className="font-serif text-lg font-bold text-green">{p.name[lang]}</h4>
         <p className="font-semibold text-brand-red">{p.role[lang]}</p>
-        {p.org && <p className="text-sm">{p.org[lang]}</p>}
+        {p.org && (
+          <p className="text-sm">
+            {p.orgUrl ? (
+              <a
+                href={p.orgUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:no-underline"
+              >
+                {p.org[lang]}
+              </a>
+            ) : (
+              p.org[lang]
+            )}
+          </p>
+        )}
         {p.phone && (
           <a href={`tel:${p.phone.tel}`} className="mt-1 inline-block text-sm font-semibold text-green underline decoration-gold decoration-2 underline-offset-2">
             {p.phone.display}

@@ -63,10 +63,10 @@ export const en = {
     stepLabel: "Step",
     // Short labels drawn inside the roadmap image
     svg: [
-      { title: "Formation", items: ["Enrol 40 founding members", "First general meeting", "Elect the board, adopt bye-laws", "Register the society"] },
-      { title: "Foundation", items: ["Nut grading & sales", "Husk / shell split", "Coir fibre & coco pith"] },
-      { title: "Federation", items: ["Join neighbouring societies", "AMC farm care", "Copra & desiccated coconut", "Shell sales"] },
-      { title: "Manufacturing", items: ["Direct distribution", "Coir ropes & mattresses", "Eco-friendly bags"] },
+      { title: "Formation", items: ["Enrol 40 founding members", "Adopt bye-laws, register", "First general meeting", "Elect President & committee"] },
+      { title: "Copra", items: ["Sulphur-free copra", "Oil & oil cake", "Copra chips & flakes"] },
+      { title: "Value-adding", items: ["Coconut chips", "Milk & flour (pilot)", "Coir & coco peat", "Shell products"] },
+      { title: "Expansion", items: ["Desiccated coconut, VCO", "Federation", "Direct distribution"] },
     ],
     steps: [
       {
@@ -74,36 +74,65 @@ export const en = {
         sub: "We are forming a farmer-owned society. It does not exist yet, and the farmers who join will build it.",
         items: [
           { h: "Founding members", t: "Enrolling 40 founding farmers from Erode district who meet the eligibility criteria." },
-          { h: "Board election", t: "At the first general meeting, the founding members elect the first Board of Directors by vote. Until then, the promoters only organise the process." },
-          { h: "Bye-laws and registration", t: "Adopting bye-laws in line with the Coconut Development Board framework, registering the society and opening its bank account." },
-          { h: "Hiring a CEO", t: "Once registered, the elected board appoints a professional CEO to run day-to-day operations." },
+          { h: "Bye-laws and registration", t: "Adopting bye-laws in line with the Coconut Development Board (CDB) model, registering the society and opening its bank account." },
+          { h: "President and committee election", t: "Within three months of registration, the first general meeting elects a President and an Executive Committee of six members, with one vote per member. The committee then elects a Vice President. Until then, the promoters only organise the process." },
+          { h: "Professional manager (optional)", t: "Once registered, the committee may appoint a professional manager or CEO to run day-to-day operations. The CDB model bye-laws do not require one." },
         ],
       },
       {
-        title: "Foundation & Primary Aggregation",
-        sub: "Building our base and capturing immediate low-hanging value.",
+        title: "Phase 1: Shared DeHusking and Copra Making",
+        sub: "Starting where the society can add real value.",
         items: [
-          { h: "Nut grading & sales", t: "Pooling our coconuts to grade them by class, weight and shape. We target premium local markets by selling whole nuts with the kudumi (tuft) retained." },
-          { h: "Primary separation", t: "Splitting the coconut into the nut, shell and husk." },
-          { h: "Minimal processing", t: "Basic infrastructure to extract coconut fibre and coco pith (coir dust). We pack and sell coco pith directly to the open market and nurseries in plastic sacks for immediate by-product revenue." },
+          { h: "Why copra first", t: "Copra is the lowest-risk, lowest-cost first step, and the farm-gate nut trade leaves little room for the society. See the three reasons below." },
+          { h: "Shared dehusking", t: "A mobile dehusker, shared by nut volume, is used for dehusking to lower production costs." },
+          { h: "Supply recommendation", t: "We suggest supplying about half your harvest for copra. This is a recommendation, not a rule." },
+          { h: "Direct B2B sales", t: "Selling directly to wholesalers, bakeries and supermarkets instead of through middlemen, with a small shared marketing budget." },
+        ],
+        more: [
+          {
+            title: "What we make from copra",
+            items: [
+              { h: "Sulphur-free copra", t: "A shared hybrid solar dryer, selling copra directly to wholesalers." },
+            { h: "Oil and oil cake", t: "Cold-pressed oil made on demand, with the oil cake sold as cattle feed." },
+              { h: "Copra chips and flakes (pilot)", t: "Sliced dried copra, sold as snack packs." },
+            ],
+          },
+          {
+            title: "Why start with copra?",
+            items: [
+              { h: "Little scope in nut sales", t: "Many members already sell dehusked nuts from the farm gate, and the husk separately by tonnage. Grading and selling nuts would add little value, as a first service." },
+              { h: "Lower risk", t: "Copra keeps far longer than fresh nuts or white flesh, so we can hold stock and sell when prices are good. Trying a product with a long shelf life limits our risk." },
+              { h: "Cheapest machinery", t: "Copra needs less machinery investment than processing the fresh white flesh (parpu) into VCO, coconut milk or desiccated coconut. It is the cheapest first step." },
+            ],
+          },
+          {
+            title: "Zero-waste by-products",
+            items: [
+              { h: "Husk", t: "Sold by tonnage to coir and coco peat units." },
+              { h: "Coconut water", t: "Collected during splitting and sold for beverages or vinegar." },
+              { h: "Shells", t: "Sold in bulk to charcoal and activated carbon makers." },
+            ],
+          },
         ],
       },
       {
-        title: "Scaling into a Federation & Managed Services",
-        sub: "Becoming a Coconut Producers Federation (CPF) by uniting with neighbouring farmer societies.",
+        title: "Value-Added Products & Coir",
+        sub: "Adding products as the society grows, with pilot testing before any large investment.",
         items: [
+          { h: "Wet-process coconut chips", t: "Coconut chips using the CPCRI wet method, once the society reaches 10,000 managed trees and most members agree to buy the equipment." },
+          { h: "Milk and flour (pilot)", t: "Fresh coconut milk for commercial kitchens and confectioners on an order basis, with the leftover flour sold to bakeries and feed shops. Pilot testing first." },
+          { h: "Coir and coco peat", t: "In-house coir fibre extraction and compressed coco peat grow blocks." },
+          { h: "Shell products", t: "Coconut shell powder, charcoal briquettes and activated carbon, with women's self-help groups trained in shell handicrafts." },
+          { h: "Robust distribution", t: "Direct-to-buyer channels and retail networks for our branded oil, coconut milk and chips, bypassing traditional wholesale mandis." },
+        ],
+      },
+      {
+        title: "Premium Processing & Federation",
+        sub: "Longer-term ideas once the society is established.",
+        items: [
+          { h: "Premium food processing", t: "Desiccated coconut for regional bakeries, then virgin coconut oil, flavoured coconut milk and nata de coco as demand grows." },
           { h: "Network expansion", t: "Sponsoring 1 to 2 additional neighbouring societies to increase our collective volume." },
           { h: "Professional farm management (AMC)", t: "End-to-end tree care, disease management and harvesting on an Annual Maintenance Contract for holdings with a minimum of 1,000 trees. Wherever feasible, we will use drones and robots for tasks such as crop monitoring, spraying, tree climbing and [harvesting](https://www.instagram.com/reel/Dd9gQE2TOrX/)." },
-          { h: "Drying & copra", t: "Community copra drying yards for stable, high-value sales." },
-          { h: "Food processing", t: "Machinery to produce and package Desiccated Coconut from fresh nuts." },
-          { h: "Shell commercialization", t: "Aggregating shells for bulk industrial sales (charcoal or activated carbon production)." },
-        ],
-      },
-      {
-        title: "Advanced Manufacturing & Distribution",
-        sub: "Evolving into a formidable agricultural enterprise with a dedicated B2B and B2C presence.",
-        items: [
-          { h: "Robust distribution", t: "Direct-to-buyer marketing channels and retail networks, bypassing traditional wholesale mandis." },
           { h: "Coir value chain", t: "Using market analysis to manufacture coir ropes, eco-friendly gunny bags and coir mattresses from our extracted fibre. [Watch this video](https://www.youtube.com/watch?v=gdmEUVOG1nQ)" },
         ],
       },
@@ -135,8 +164,8 @@ export const en = {
     mapDenied: "Could not get your location. Please paste a Google Maps link instead.",
     amc: "Interested in future AMC farm management?",
     boardTip:
-      "At the first general meeting, founding members nominate candidates and elect the Board of Directors, with one vote per member. Directors then serve a fixed term set by the bye-laws and are re-elected by the members. Founding members are expected to volunteer their time and to be helpful and considerate in assisting society members with their queries and needs.",
-    board: "I am interested in being a Founding / Board Member",
+      "At the first general meeting, founding members nominate candidates and elect the President and Executive Committee, with one vote per member. The President and committee serve a three-year term under the CDB model bye-laws and are then re-elected by the members. Founding members are expected to volunteer their time and to be helpful and considerate in assisting society members with their queries and needs.",
+    board: "I am interested in being a Founding / Committee Member",
     yes: "Yes",
     no: "No",
     choose: "Select",
@@ -165,7 +194,7 @@ export const en = {
   team: {
     title: "Our Team",
     board: "Founding Promoters",
-    boardNote: "The first Board of Directors will be elected by the founding members at the first general meeting.",
+    boardNote: "The first President and Executive Committee will be elected by the founding members at the first general meeting.",
     advisors: "External Advisors",
   },
   volunteer: {

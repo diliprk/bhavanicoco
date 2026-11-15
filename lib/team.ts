@@ -2,6 +2,7 @@ export type Person = {
   name: { en: string; ta: string };
   role: { en: string; ta: string };
   org?: { en: string; ta: string };
+  orgUrl?: string;
   phone?: { tel: string; display: string };
   photo?: string; // optional, e.g. "/team/name.jpg"; initials avatar is used when absent
 };
@@ -29,6 +30,7 @@ export const ADVISORS: Person[] = [
       en: "Erode Precision Farm Producer Company Ltd",
       ta: "ஈரோடு பிரிசிஷன் ஃபார்ம் புரொட்யூசர் கம்பெனி லிமிடெட்",
     },
+    orgUrl: "https://drive.google.com/file/d/1HE_8snNr2VDaQLxnlBGGy_GGhKifU-5_/view?usp=sharing",
     phone: { tel: "+919884706410", display: "+91 98847 06410" },
   },
 ];
